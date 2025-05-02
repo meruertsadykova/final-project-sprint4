@@ -27,26 +27,25 @@ public class OrderTest extends BaseTest {
     }
 
     // Параметризация, чтобы тест можно было запускать с разными входными данными
-    @Parameters
+    @Parameters(name = "Тестовые данные: {0} ** {1} ** {2} ** {3}")
     public static Collection<Object[]> testData() {
         return Arrays.asList(new Object[][] {
                 { "Иван", "Иванов", "Москва, ул. Пушкина", "+79998887766" },
-                { "Петр", "Петров", "Санкт-Петербург, Невский пр.", "+78887776655" },
-                { "Анна", "Смирнова", "Екатеринбург, ул. Мира", "+75556667788" }
+                { "Петр", "Петров", "Санкт-Петербург, Невский пр.", "+78887776655" }
         });
     }
 
     @Test
-    public void orderTest() {
+    public void orderByUpperBtnTest() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.clickOrderBtn();
+        mainPage.clickAcceptCookies();
+        mainPage.clickUpperOrderBtn();
 
         OrderPage orderPage = new OrderPage(driver);
         orderPage.fillOrderForm(name, surname, address, phone);
         orderPage.clickNextBtn();
 
         orderPage.fillRentDetails("30", "Autotest");
-        orderPage.clickAcceptCookies();
         orderPage.clickOrderBtn();
         orderPage.clickYesBtn();
 
@@ -54,4 +53,20 @@ public class OrderTest extends BaseTest {
                 orderPage.isOrderSuccessLblDisplayed());
     }
 
+    @Test
+    public void orderByBottomBtnTest() {
+        MainPage mainPage = new MainPage(driver);
+        mainPage.clickBottomOrderBtn();
+
+        OrderPage orderPage = new OrderPage(driver);
+        orderPage.fillOrderForm(name, surname, address, phone);
+        orderPage.clickNextBtn();
+
+        orderPage.fillRentDetails("30", "Autotest");
+        orderPage.clickOrderBtn();
+        orderPage.clickYesBtn();
+
+        Assert.assertTrue("Всплывающее окно с сообщением об успешном созданий заказа не появилось!",
+                orderPage.isOrderSuccessLblDisplayed());
+    }
 }

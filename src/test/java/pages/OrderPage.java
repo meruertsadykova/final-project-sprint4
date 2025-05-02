@@ -37,8 +37,6 @@ public class OrderPage {
     private final By orderConfirmLbl = By.xpath("//*[text()='Хотите оформить заказ?']");
     // Локатор кнопки да
     private final By yesBtn = By.xpath("//button[text()='Да']");
-    // Локатор кнопки принять куки
-    private final By acceptCookies = By.id("rcc-confirm-button");
     // Локатор текста успешного оформления заказа
     private final By orderSuccessLbl = By.xpath("//*[contains(text(), 'Заказ оформлен')]");
 
@@ -77,14 +75,6 @@ public class OrderPage {
     public void clickYesBtn() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(orderConfirmLbl));
         driver.findElement(yesBtn).click();
-    }
-
-    public void clickAcceptCookies() {
-        try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(acceptCookies)).click();
-        } catch (TimeoutException e) {
-            System.out.println("Cookie button was not present in time.");
-        }
     }
 
     public boolean isOrderSuccessLblDisplayed() {
